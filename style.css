@@ -39,13 +39,21 @@ h1 {
 }
 
 h2 {
-    font-size: 40px;
-}
-
-h3 {
     font-size: 30px;
 }
 
+h3 {
+    font-size: 20px;
+}
+
+.container {
+    justify-content: center;
+    /* center horizontally */
+    align-items: flex-start;
+    /* align items to the top */
+    display: flex;
+    gap: 20px;
+}
 
 /* class */
 .heading {
@@ -70,11 +78,30 @@ h3 {
 
 .centered {
     text-align: center;
+    justify-content: center;
+}
+
+.scattered {
+    justify-content: space-between;
+    width: 100%;
 }
 
 .horizontal {
     display: flex;
     gap: 20px;
+}
+
+.no-bullets {
+    list-style: none;
+}
+
+li {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+li:last-child {
+    margin-bottom: 0;
 }
 
 footer {
