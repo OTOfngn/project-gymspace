@@ -1,14 +1,24 @@
+<!--
+Notes:
+need a theme toggle button
+a dictionary for gyms? a timetable for each
+editable timetable elements
+time slots
+add-booking button and input field
+
+-->
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="style.css">
+<script src="main.js" defer></script>
 
 <head>
     <section class="with-sticky-nav">
         <h1 class="heading">GymSpace</h1>
         <nav>
             <ul class="horizontal">
-                <li>Home</li>
-                <li>Login/Register</li>
+                <li><button id="theme-btn" class="heading">Theme</button></li>
+                <li><button id="login-btn" class="heading">Login/Register</button></li>
             </ul>
         </nav>
     </section>
@@ -18,47 +28,124 @@
 
 <body>
 
-    <section>
+    <section> <!--Description-->
         <p class="centered">This is a website designed for gym enthusiasts. </p>
         <p class="centered">Here you can find information about gyms and workout plans.</p>
+        <br>
     </section>
 
-    <section class="container">
-        <section>
+    <section class="container"> <!--Main content-->
+        <section> <!--Gym List-->
             <h2 class="centered">Gym List</h2>
             <nav>
-                <ul class="centered">
-                    <li>Gym 1</li>
-                    <li>Gym 2</li>
-                    <li>Gym 3</li>
+                <ul class="centered" id="gym-list">
+                    <li><button>Gym 1</button></li>
+                    <li><button>Gym 2</button></li>
+                    <li><button>Gym 3</button></li>
                 </ul>
             </nav>
         </section>
 
         <!-- <section style="flex-basis: "></section> -->
 
-        <section style="flex-basis: 80%;">
+        <section style="flex-basis: 80%;"> <!--Workout Plans-->
             <h2 class="centered">Workout Plans</h2>
-            <nav>
-                <ol class="no-bullets horizontal centered scattered">
-                    <li></li> <!-- empty space -->
-                    <li>Monday</li>
-                    <li>Tuesday</li>
-                    <li>Wednesday</li>
-                    <li>Thursday</li>
-                    <li>Friday</li>
-                    <li>Saturday</li>
-                    <li>Sunday</li>
-                    <li></li> <!-- empty space -->
-                </ol>
-            </nav>
+            <!-- <ol class="no-bullets horizontal centered scattered"> -->
+            <table>
+                <tr class="no-bullets horizontal centered scattered">
+                    <thead>
+                        <tr>
+                            <th></th> <!-- empty space -->
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>8am - 10am</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>10am - 12pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>12pm - 2pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2pm - 4pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>4pm - 6pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>6pm - 8pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>8pm - 10pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </tr>
+            </table>
         </section>
     </section>
 
-</body>
+    <footer>
+        <p class="centered">Copyright © 2026 GymSpace</p>
+    </footer>
 
-<footer>
-    <p>Copyright © 2026 GymSpace</p>
-</footer>
+</body>
 
 </html>

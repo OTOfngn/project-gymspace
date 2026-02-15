@@ -1,9 +1,21 @@
+/* ==================== */
+/* GLOBAL               */
+/* ==================== */
+
+/* -- main -- */
+
 :root {
     --primary-color: #39c5bb;
-    --secondary-color: #1a1a1a;
-    --text-color: #ffffff;
-    --bg-color: #0f0f0f;
+    --secondary-color: rgba(255, 255, 255, 0.2);
+    --text-color-dark: #ffffff;
+    --bg-color-dark: rgb(31, 31, 31);
+    --text-color-light: #1f1f1f;
+    --bg-color-light: #c7fcff;
     --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-size: 16px;
+
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
 }
 
 * {
@@ -18,7 +30,29 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, color 0.3s;
 }
+
+/* -- classes -- */
+
+.dark-theme {
+    --bg-color: var(--bg-color-dark);
+    --text-color: var(--text-color-dark);
+}
+
+.light-theme {
+    --bg-color: var(--bg-color-light);
+    --text-color: var(--text-color-light);
+}
+
+/* ==================== */
+/* ELEMENTS             */
+/* ==================== */
+
+/* -- main -- */
 
 a {
     text-decoration: none;
@@ -35,16 +69,67 @@ img {
 }
 
 h1 {
+    color: var(--primary-color);
     font-size: 60px;
 }
 
 h2 {
+    color: var(--primary-color);
     font-size: 30px;
 }
 
 h3 {
     font-size: 20px;
 }
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
+button.heading {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+}
+
+li {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+li.button {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+
+li:last-child {
+    margin-bottom: 0;
+}
+
+footer {
+    color: var(--secondary-color);
+    margin-top: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 1rem;
+}
+
+/* -- classes -- */
 
 .container {
     justify-content: center;
@@ -55,7 +140,6 @@ h3 {
     gap: 20px;
 }
 
-/* class */
 .heading {
     text-align: center;
     margin-top: 2rem;
@@ -93,17 +177,4 @@ h3 {
 
 .no-bullets {
     list-style: none;
-}
-
-li {
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-
-li:last-child {
-    margin-bottom: 0;
-}
-
-footer {
-    margin-top: auto;
 }
