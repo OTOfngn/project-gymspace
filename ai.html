@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Link to the shared stylesheet so this page looks the same as index.html -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Load ai.js after the HTML has finished loading (defer attribute).
+     "defer" makes the script wait until all HTML elements exist before running,
+     so getElementById() calls in ai.js can find the elements. -->
+<script src="ai.js" defer></script>
+
+<head>
+    <!-- Navigation bar: same layout as index.html for consistency -->
+    <section class="with-sticky-nav">
+        <h1 class="heading">GymSpace</h1>
+        <nav>
+            <ul class="horizontal">
+                <!-- Theme toggle button — controlled by ai.js -->
+                <li><button id="theme-btn" class="heading">Theme</button></li>
+
+                <!-- Home button to navigate back to the main page.
+                     onclick="window.location.href='index.html'" changes the
+                     browser's URL to index.html, which loads the main page. -->
+                <li><button class="heading" onclick="window.location.href='index.html'">Home</button></li>
+            </ul>
+        </nav>
+    </section>
+</head>
+
+<body>
+
+    <!-- AI Assistant section -->
+    <section>
+        <h2 class="centered">AI Workout Assistant</h2>
+        <p class="centered">Ask any fitness or workout related question!</p>
+        <br>
+
+        <!-- Input area: a text field and a button side by side.
+             display:flex and justify-content:center arrange them horizontally and centered.
+             gap:8px adds space between the input and the button. -->
+        <div class="centered" style="display: flex; justify-content: center; gap: 8px; margin: 10px;">
+
+            <!-- Text input where the user types their question.
+                 id="ai-input" lets ai.js find this element with getElementById().
+                 The styling makes it match the page theme using CSS variables. -->
+            <input type="text" id="ai-input" placeholder="Ask about workouts..."
+                style="padding: 8px; width: 400px; border-radius: 5px; border: 1px solid var(--secondary-color); background-color: var(--bg-color); color: var(--text-color); font-size: var(--font-size);">
+
+            <!-- Button that triggers the API call when clicked.
+                 id="ai-btn" lets ai.js attach an onclick handler to it. -->
+            <button id="ai-btn">Ask AI</button>
+        </div>
+
+        <!-- This <p> element is where the AI's response text will be displayed.
+             id="ai-response" lets ai.js write text into it using .textContent.
+             white-space: pre-wrap preserves line breaks in the AI's response.
+             max-width: 700px prevents the text from stretching too wide. -->
+        <p id="ai-response" class="centered" style="white-space: pre-wrap; max-width: 700px; margin: 20px auto;"></p>
+    </section>
+
+    <footer>
+        <p class="centered">Copyright © 2026 GymSpace</p>
+    </footer>
+
+</body>
+
+</html>
