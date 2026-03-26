@@ -106,10 +106,11 @@ aiBtn.onclick = async function () {
             // .content.parts[0] = first part of that answer
             // .text = the actual text string
             aiResponse.textContent = data.candidates[0].content.parts[0].text;
-        } else {
-            // If no candidates were returned, show a fallback message
-            aiResponse.textContent = "No response received. Try again.";
         }
+        // else {
+        //     // If no candidates were returned, show a fallback message
+        //     aiResponse.textContent = "No response received. Try again.";
+        // }
     } catch (error) {
         // If the fetch() failed (e.g. no internet, API down, invalid key),
         // display the error message to the user
@@ -129,4 +130,30 @@ aiBtn.onclick = async function () {
 // This makes it more convenient — the user doesn't have to click the button manually.
 aiInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") aiBtn.click();
+});
+
+document.getElementById('ai-btn').addEventListener('click', async () => {
+    const inputField = document.getElementById('ai-input');
+    const responseField = document.getElementById('ai-response');
+    const userQuestion = inputField.value;
+    if (!userQuestion) return; // Don't do anything if input is empty
+    responseField.textContent = "Thinking..."; // Show a loading message
+    try {
+        const response = await fetch('http://localhost:3000/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo", // or another model
+                messages: [{ role: "user", content: userQuestion }]
+            })
+        });
+        const data = await response.json();
+        // Extract the AI's reply and show it on the page
+        responseField.textContent = data.reply;
+    } catch (error) {
+        responseField.textContent = "Error connecting to the AI.";
+        console.error(error);
+    }
 });

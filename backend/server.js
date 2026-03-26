@@ -1,0 +1,49 @@
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const { GoogleGenAI } = require('@google/genai');
+
+// Load environment variables from .env file
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors()); // Allow frontend to communicate with backend
+app.use(express.json()); // Parse JSON request bodies
+
+// Initialize Google Gemini API client
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Chat endpoint
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { messages } = req.body;
+
+        if (!messages || messages.length === 0) {
+            return res.status(400).json({ error: "Messages are required." });
+        }
+
+        // The frontend sends OpenAI-style messages [{role: 'user', content: 'hello'}]
+        // We extract the user's latest question.
+        const userQuestion = messages[messages.length - 1].content;
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: userQuestion,
+        });
+
+        // Send the AI's response back to the frontend
+        res.json({ reply: response.text });
+
+    } catch (error) {
+        console.error("Error communicating with AI:", error.message);
+        res.status(500).json({ error: "Failed to connect to AI provider." });
+    }
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Backend server is running on http://localhost:${PORT}`);
+});
