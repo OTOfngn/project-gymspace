@@ -1,10 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const dotenv = require('dotenv');
 const { GoogleGenAI } = require('@google/genai');
 
 // Load environment variables from .env file
-dotenv.config();
+// path.join(__dirname, '.env') ensures the .env is found relative to this file,
+// not the directory the command was run from.
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
