@@ -35,6 +35,11 @@ app.post('/api/chat', async (req, res) => {
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: userQuestion,
+            config: {
+                // This acts as a hidden "pre-prompt" to tell the AI how to behave.
+                // The user doesn't see this, but it guides all of the AI's answers.
+                systemInstruction: "You are a professional, motivating workout assistant for an app called GymSpace. Your goal is to help users with fitness, workout routines, diet, and gym-related questions. Be encouraging but keep your answers relatively concise. If a user asks a question entirely unrelated to health and fitness, politely decline to answer and remind them you are a fitness assistant.",
+            }
         });
 
         // Send the AI's response back to the frontend
