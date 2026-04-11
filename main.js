@@ -109,3 +109,45 @@ gymButtons.forEach(btn => {
 // Run the initial setup when the page loads
 renderTable();
 // localStorage.clear();
+
+// ===========================
+// DYNAMIC WEEK DATES
+// ===========================
+function updateWeekDates() {
+    const today = new Date();
+    // In JavaScript, getDay() returns 0 for Sunday, 1 for Monday, etc.
+    // We want Monday to be the start of the week, so we adjust the day to a 0-6 scale where Monday is 0.
+    const dayOfWeek = today.getDay() === 0 ? 6 : today.getDay() - 1;
+    
+    // Calculate the date of Monday for the current week
+    const mondayDate = new Date(today);
+    mondayDate.setDate(today.getDate() - dayOfWeek);
+
+    const days = [
+        { id: "th-mon", name: "Monday" },
+        { id: "th-tue", name: "Tuesday" },
+        { id: "th-wed", name: "Wednesday" },
+        { id: "th-thu", name: "Thursday" },
+        { id: "th-fri", name: "Friday" },
+        { id: "th-sat", name: "Saturday" },
+        { id: "th-sun", name: "Sunday" }
+    ];
+
+    // Loop through the 7 days of the week, calculate their specific date, and update the HTML element
+    for (let i = 0; i < 7; i++) {
+        const currentDate = new Date(mondayDate);
+        currentDate.setDate(mondayDate.getDate() + i);
+        
+        // Format the date as "DD/MM" (e.g., "15/04")
+        const dateStr = currentDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' });
+        
+        const thElement = document.getElementById(days[i].id);
+        if (thElement) {
+            thElement.innerHTML = `${days[i].name}<br><span style="font-size: 0.8em; font-weight: normal; color: var(--secondary-text-color, #777);">${dateStr}</span>`;
+        }
+    }
+}
+
+// Call the function to update dates when the page loads
+updateWeekDates();
+

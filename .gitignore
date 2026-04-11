@@ -1,5 +1,5 @@
 # Environment variables (contains API keys)
-backend/.env
+.env
 
 # Node.js dependencies
 node_modules/
