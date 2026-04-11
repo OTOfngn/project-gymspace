@@ -30,11 +30,6 @@ themeBtn.onclick = function () {
 // AI WORKOUT ASSISTANT
 // ===========================
 
-// API_KEY is the authentication key for the Google Gemini API.
-// It is needed so that Google knows who is making the request
-// and allows us to use the AI service.
-const API_KEY = "AIzaSyBZE4S0aoghhF0E1ny-Pk_YVLjRy1Whd1c";
-
 // Get references to the HTML elements we need to interact with:
 // - aiBtn: the "Ask AI" button the user clicks to send their question
 // - aiInput: the text input field where the user types their question
@@ -65,56 +60,40 @@ aiBtn.onclick = async function () {
     // If anything goes wrong with the API request, the catch block will run
     // instead of crashing the page.
     try {
-        // fetch() sends an HTTP request to the Gemini API.
-        // - The URL is the Gemini API endpoint for generating text content.
-        // - The API_KEY is passed as a query parameter in the URL.
-        // - "await" pauses execution here until the API sends back a response.
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
-            {
-                // POST method is used because we are SENDING data (the question) to the API
-                method: "POST",
+        // fetch() sends the question to our own backend server,
+        // which securely forwards it to the Gemini API using the
+        // API key stored in the .env file (never exposed to the browser).
+        const response = await fetch('http://localhost:3000/api/chat', {
+            // POST method is used because we are SENDING data (the question) to the API
+            method: 'POST',
 
-                // Headers tell the API that we are sending JSON-formatted data
-                headers: { "Content-Type": "application/json" },
+            // Headers tell the server that we are sending JSON-formatted data
+            headers: { 'Content-Type': 'application/json' },
 
-                // body contains the actual data we send to the API.
-                // JSON.stringify() converts a JavaScript object into a JSON string
-                // because APIs communicate using text (JSON), not JavaScript objects.
-                // The "contents" array with "parts" is the format that Gemini API expects.
-                body: JSON.stringify({
-                    contents: [
-                        {
-                            parts: [{ text: question }]
-                        }
-                    ]
-                })
-            }
-        );
+            // body contains the actual data we send to the backend.
+            // JSON.stringify() converts a JavaScript object into a JSON string
+            // because APIs communicate using text (JSON), not JavaScript objects.
+            body: JSON.stringify({
+                messages: [{ role: "user", content: question }]
+            })
+        });
 
-        // response.json() converts the API's response from JSON text
+        // response.json() converts the backend's response from JSON text
         // back into a JavaScript object we can work with.
         // "await" pauses here again until the conversion is done.
         const data = await response.json();
 
-        // Check if the API returned valid results.
-        // "data.candidates" is an array of possible answers from the AI.
-        // If it exists and has at least one item, we extract the text.
-        if (data.candidates && data.candidates.length > 0) {
-            // Navigate through the response structure to get the actual text:
-            // data.candidates[0] = first answer option
-            // .content.parts[0] = first part of that answer
-            // .text = the actual text string
-            aiResponse.textContent = data.candidates[0].content.parts[0].text;
+        // The backend returns { reply: "..." } with the AI's answer
+        if (data.reply) {
+            aiResponse.textContent = data.reply;
+        } else {
+            aiResponse.textContent = "No response received. Try again.";
         }
-        // else {
-        //     // If no candidates were returned, show a fallback message
-        //     aiResponse.textContent = "No response received. Try again.";
-        // }
     } catch (error) {
-        // If the fetch() failed (e.g. no internet, API down, invalid key),
-        // display the error message to the user
-        aiResponse.textContent = "Error: " + error.message;
+        // If the fetch() failed (e.g. no internet, backend not running),
+        // display an error message to the user
+        aiResponse.textContent = "Error connecting to the AI.";
+        console.error(error);
     }
 
     // Re-enable the button so the user can ask another question
@@ -130,30 +109,4 @@ aiBtn.onclick = async function () {
 // This makes it more convenient — the user doesn't have to click the button manually.
 aiInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") aiBtn.click();
-});
-
-document.getElementById('ai-btn').addEventListener('click', async () => {
-    const inputField = document.getElementById('ai-input');
-    const responseField = document.getElementById('ai-response');
-    const userQuestion = inputField.value;
-    if (!userQuestion) return; // Don't do anything if input is empty
-    responseField.textContent = "Thinking..."; // Show a loading message
-    try {
-        const response = await fetch('http://localhost:3000/api/chat', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: "gpt-3.5-turbo", // or another model
-                messages: [{ role: "user", content: userQuestion }]
-            })
-        });
-        const data = await response.json();
-        // Extract the AI's reply and show it on the page
-        responseField.textContent = data.reply;
-    } catch (error) {
-        responseField.textContent = "Error connecting to the AI.";
-        console.error(error);
-    }
 });
