@@ -95,8 +95,8 @@ async function handleAuth(url) {
     }
 }
 
-loginAuthBtn.onclick = () => handleAuth('http://localhost:3000/api/login');
-registerAuthBtn.onclick = () => handleAuth('http://localhost:3000/api/register');
+loginAuthBtn.onclick = () => handleAuth('https://gymspace-4sfc.onrender.com/login');
+registerAuthBtn.onclick = () => handleAuth('https://gymspace-4sfc.onrender.com/register');
 
 // page refresh
 function refresh() {
