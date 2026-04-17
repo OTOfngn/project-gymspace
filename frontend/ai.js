@@ -66,8 +66,8 @@ aiBtn.onclick = async function () {
     // If anything goes wrong with the API request, the catch block will run
     // instead of crashing the page.
     try {
-        // fetch() sends the question to our own backend server
-        const response = await fetch('http://localhost:3000/api/chat', {
+        // fetch() sends the question to our backend server on Render
+        const response = await fetch('https://gymspace-4sfc.onrender.com/api/chat', {
             // POST method is used because we are SENDING data (the question) to the API
             method: 'POST',
 

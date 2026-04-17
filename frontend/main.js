@@ -95,8 +95,8 @@ async function handleAuth(url) {
     }
 }
 
-loginAuthBtn.onclick = () => handleAuth('https://gymspace-4sfc.onrender.com/login');
-registerAuthBtn.onclick = () => handleAuth('https://gymspace-4sfc.onrender.com/register');
+loginAuthBtn.onclick = () => handleAuth('https://gymspace-4sfc.onrender.com/api/login');
+registerAuthBtn.onclick = () => handleAuth('https://gymspace-4sfc.onrender.com/api/register');
 
 // page refresh
 function refresh() {
@@ -167,9 +167,8 @@ function createBookingBtn(dateString, timeSlot, initialStatus) {
                 return;
         }
 
-        // Save to Database Configured in server.js
         try {
-            const response = await fetch('http://localhost:3000/api/bookings', {
+            const response = await fetch('https://gymspace-4sfc.onrender.com/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -217,7 +216,7 @@ async function renderTable() {
     let activeBookings = [];
     try {
         const userIdParam = currentUserId ? `?userId=${currentUserId}` : '';
-        const response = await fetch(`http://localhost:3000/api/bookings/${encodeURIComponent(currentGym)}${userIdParam}`);
+        const response = await fetch(`https://gymspace-4sfc.onrender.com/api/bookings/${encodeURIComponent(currentGym)}${userIdParam}`);
         if (response.ok) {
             activeBookings = await response.json();
         }
