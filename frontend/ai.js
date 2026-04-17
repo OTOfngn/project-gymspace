@@ -11,18 +11,24 @@ const themeBtn = document.getElementById("theme-btn");
 const body = document.body;
 
 // When the Theme button is clicked, toggle between dark and light themes.
-// This works by swapping CSS classes on the <body> element.
-// The "dark-theme" and "light-theme" classes are defined in style.css
-// and they change CSS variables like --bg-color and --text-color.
+// We use localStorage to save the preference across pages.
+const savedTheme = localStorage.getItem("gymspace-theme");
+if (savedTheme) {
+    if (savedTheme === "light-theme") body.classList.add("light-theme");
+    else if (savedTheme === "dark-theme") body.classList.add("dark-theme");
+}
+
 themeBtn.onclick = function () {
-    if (body.classList.contains("dark-theme")) {
-        // If currently dark, switch to light
-        body.classList.remove("dark-theme");
-        body.classList.add("light-theme");
-    } else {
-        // If currently light (or default), switch to dark
+    // If it's currently light, switch to dark. 
+    // Default (no class) is dark, so any other condition means switch to light.
+    if (body.classList.contains("light-theme")) {
         body.classList.remove("light-theme");
         body.classList.add("dark-theme");
+        localStorage.setItem("gymspace-theme", "dark-theme");
+    } else {
+        body.classList.remove("dark-theme");
+        body.classList.add("light-theme");
+        localStorage.setItem("gymspace-theme", "light-theme");
     }
 };
 
@@ -60,9 +66,7 @@ aiBtn.onclick = async function () {
     // If anything goes wrong with the API request, the catch block will run
     // instead of crashing the page.
     try {
-        // fetch() sends the question to our own backend server,
-        // which securely forwards it to the Gemini API using the
-        // API key stored in the .env file (never exposed to the browser).
+        // fetch() sends the question to our own backend server
         const response = await fetch('http://localhost:3000/api/chat', {
             // POST method is used because we are SENDING data (the question) to the API
             method: 'POST',
