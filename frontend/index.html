@@ -1,12 +1,3 @@
-<!--
-Notes:
-need a theme toggle button
-a dictionary for gyms? a timetable for each
-editable timetable elements
-time slots
-add-booking button and input field
-
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +5,8 @@ add-booking button and input field
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GymSpace — Book Your Workout</title>
-    <meta name="description" content="GymSpace helps gym enthusiasts discover gyms, browse workout plans, and book time slots with ease.">
+    <meta name="description"
+        content="GymSpace helps gym enthusiasts discover gyms, browse workout plans, and book time slots with ease.">
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
 </head>
@@ -22,7 +14,7 @@ add-booking button and input field
 <body>
 
     <header class="with-sticky-nav">
-        <span id="user-display" style="display:none;"></span>
+        <span id="user-display"></span>
         <h1>GymSpace</h1>
         <nav>
             <ul class="horizontal">
@@ -38,7 +30,7 @@ add-booking button and input field
 
     <section> <!--Description-->
         <p class="centered heading">This is a website designed for gym enthusiasts.</p>
-        <p class="centered" style="margin-top:-1rem;">Here you can find information about gyms and workout plans.</p>
+        <p class="centered subtitle">Here you can find information about gyms and workout plans.</p>
     </section>
 
     <section class="container"> <!--Main content-->
@@ -53,22 +45,19 @@ add-booking button and input field
             </nav>
         </section>
 
-        <!-- <section style="flex-basis: "></section> -->
-
-        <section style="flex-basis: 80%;"> <!--Workout Plans-->
+        <section class="workout-section"> <!--Workout Plans-->
             <h2 id="workout-plans-title" class="centered">Gym 1 — Workout Plans</h2>
-            <!-- <ol class="no-bullets horizontal centered scattered"> -->
             <table>
                 <thead>
                     <tr>
                         <th></th> <!-- empty space -->
-                        <th id="th-mon">Monday</th>
-                        <th id="th-tue">Tuesday</th>
-                        <th id="th-wed">Wednesday</th>
-                        <th id="th-thu">Thursday</th>
-                        <th id="th-fri">Friday</th>
-                        <th id="th-sat">Saturday</th>
-                        <th id="th-sun">Sunday</th>
+                        <th id="th-mon">Mon</th>
+                        <th id="th-tue">Tue</th>
+                        <th id="th-wed">Wed</th>
+                        <th id="th-thu">Thu</th>
+                        <th id="th-fri">Fri</th>
+                        <th id="th-sat">Sat</th>
+                        <th id="th-sun">Sun</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -327,6 +327,7 @@ td a[data-status="booked by someone else"] {
     font-weight: 600;
     color: var(--primary-color);
     opacity: 0.9;
+    display: none;
 }
 
 .centered {
@@ -387,6 +388,14 @@ td a[data-status="booked by someone else"] {
 section > .centered {
     font-size: var(--font-size);
     line-height: 1.8;
+}
+
+.subtitle {
+    margin-top: -1rem;
+}
+
+.workout-section {
+    flex-basis: 80%;
 }
 
 /* ==================== */
@@ -539,4 +548,102 @@ section > .centered {
     padding: 0 1rem;
     line-height: 1.7;
     opacity: 0.85;
+}
+
+/* ==================== */
+/* RESPONSIVE DESIGN    */
+/* ==================== */
+
+/* Tablet — stack layout, scrollable table */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .workout-section {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    #gym-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #gym-list button {
+        text-align: center;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .with-sticky-nav {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .with-sticky-nav nav {
+        position: static;
+    }
+
+    .with-sticky-nav h1 {
+        width: 100%;
+        text-align: center;
+    }
+
+    #user-display {
+        position: static;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Mobile — smaller text, compact spacing */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .container {
+        padding: 0 0.5rem;
+    }
+
+    th {
+        font-size: 11px;
+        padding: 0.6rem 0.3rem;
+    }
+
+    td {
+        font-size: 11px;
+        padding: 0.5rem 0.2rem;
+    }
+
+    td a {
+        font-size: 11px;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .modal-card {
+        margin: 0 1rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .ai-input-container {
+        flex-direction: column;
+    }
+
+    .heading {
+        margin-top: 1.2rem;
+        margin-bottom: 1rem;
+    }
 }

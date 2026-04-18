@@ -12,12 +12,16 @@ function checkWeekInRealtime() {
         renderTable();
     }
 }
-// Check every 60 seconds
-setInterval(checkWeekInRealtime, 60000);
+// Check every hour
+setInterval(checkWeekInRealtime, 3600000);
 
 // Authentication State
-let currentUserId = localStorage.getItem("userId");
-let currentUsername = localStorage.getItem("username");
+// let currentUserId = localStorage.getItem("userId");
+// let currentUsername = localStorage.getItem("username");
+// ^^^ This is not used because it is not secure
+// Default status set as unauthenticated
+let currentUserId = null;
+let currentUsername = null;
 
 // Update UI based on auth state
 function updateAuthUI() {
