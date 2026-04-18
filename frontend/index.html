@@ -9,14 +9,21 @@ add-booking button and input field
 -->
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="style.css">
-<script src="main.js" defer></script>
 
 <head>
-    <section class="with-sticky-nav">
-        <span id="user-display" class="heading"
-            style="display:none; position:absolute; left:2rem; font-size:20px; font-weight:bold; color:var(--primary-color);"></span>
-        <h1 class="heading">GymSpace</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymSpace — Book Your Workout</title>
+    <meta name="description" content="GymSpace helps gym enthusiasts discover gyms, browse workout plans, and book time slots with ease.">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+
+    <header class="with-sticky-nav">
+        <span id="user-display" style="display:none;"></span>
+        <h1>GymSpace</h1>
         <nav>
             <ul class="horizontal">
                 <li><button id="theme-btn" class="heading">Theme</button></li>
@@ -27,17 +34,11 @@ add-booking button and input field
                 <li><button id="login-btn" class="heading">Login</button></li>
             </ul>
         </nav>
-    </section>
-    <!-- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-</head>
-
-<body>
+    </header>
 
     <section> <!--Description-->
-        <p class="centered">This is a website designed for gym enthusiasts. </p>
-        <p class="centered">Here you can find information about gyms and workout plans.</p>
-        <br>
+        <p class="centered heading">This is a website designed for gym enthusiasts.</p>
+        <p class="centered" style="margin-top:-1rem;">Here you can find information about gyms and workout plans.</p>
     </section>
 
     <section class="container"> <!--Main content-->
@@ -55,7 +56,7 @@ add-booking button and input field
         <!-- <section style="flex-basis: "></section> -->
 
         <section style="flex-basis: 80%;"> <!--Workout Plans-->
-            <h2 id="workout-plans-title" class="centered">Gym 1 - Workout Plans</h2>
+            <h2 id="workout-plans-title" class="centered">Gym 1 — Workout Plans</h2>
             <!-- <ol class="no-bullets horizontal centered scattered"> -->
             <table>
                 <thead>
@@ -72,7 +73,7 @@ add-booking button and input field
                 </thead>
                 <tbody>
                     <tr>
-                        <td>8am - 10am</td>
+                        <td>8am – 10am</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -82,7 +83,7 @@ add-booking button and input field
                         <td></td>
                     </tr>
                     <tr>
-                        <td>10am - 12pm</td>
+                        <td>10am – 12pm</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -92,7 +93,7 @@ add-booking button and input field
                         <td></td>
                     </tr>
                     <tr>
-                        <td>12pm - 2pm</td>
+                        <td>12pm – 2pm</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -102,7 +103,7 @@ add-booking button and input field
                         <td></td>
                     </tr>
                     <tr>
-                        <td>2pm - 4pm</td>
+                        <td>2pm – 4pm</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -112,7 +113,7 @@ add-booking button and input field
                         <td></td>
                     </tr>
                     <tr>
-                        <td>4pm - 6pm</td>
+                        <td>4pm – 6pm</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -122,7 +123,7 @@ add-booking button and input field
                         <td></td>
                     </tr>
                     <tr>
-                        <td>6pm - 8pm</td>
+                        <td>6pm – 8pm</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -132,7 +133,7 @@ add-booking button and input field
                         <td></td>
                     </tr>
                     <tr>
-                        <td>8pm - 10pm</td>
+                        <td>8pm – 10pm</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -152,25 +153,19 @@ add-booking button and input field
     </footer>
 
     <!-- Login Modal -->
-    <div id="login-modal"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index: 1000; justify-content:center; align-items:center;">
-        <div
-            style="background:var(--background-color, white); padding:30px; border-radius:10px; text-align:center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-card">
             <h2 id="modal-title">Login</h2>
-            <input type="text" id="username-input" placeholder="Username"
-                style="margin:10px 0; padding:10px; width:80%;" /><br>
-            <input type="password" id="password-input" placeholder="Password"
-                style="margin:10px 0; padding:10px; width:80%;" /><br>
-            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
-                <button id="login-auth-btn"
-                    style="padding:10px 20px; background:var(--primary-color, blue); color:white; border:none; border-radius:5px; cursor:pointer;">Login</button>
-                <button id="register-auth-btn"
-                    style="padding:10px 20px; background:var(--primary-color, green); color:white; border:none; border-radius:5px; cursor:pointer;">Register</button>
+            <input type="text" id="username-input" class="modal-input" placeholder="Username" />
+            <input type="password" id="password-input" class="modal-input" placeholder="Password" />
+            <div class="modal-actions">
+                <button id="login-auth-btn" class="btn-primary">Login</button>
+                <button id="register-auth-btn" class="btn-secondary">Register</button>
             </div>
-            <button id="close-modal-btn"
-                style="margin-top:15px; padding:8px 16px; background:lightgray; color:black; border:none; border-radius:5px; cursor:pointer;">Close</button>
+            <button id="close-modal-btn" class="btn-close">Close</button>
         </div>
     </div>
+
 
 </body>
 
