@@ -128,36 +128,55 @@ app.get('/api/bookings/:gym', async (req, res) => {
     }
 });
 
-// POST to update or add a booking
+// POST to add a booking
 app.post('/api/bookings', async (req, res) => {
     try {
-        const { gymName, dateString, timeSlot, status, userId } = req.body;
+        const { gymName, dateString, timeSlot, userId } = req.body;
         
         if (!userId) return res.status(401).json({ error: "Must be logged in to book" });
 
-        // Enforce max appointment limit in backend (if booking a new one)
-        if (status === 'booked') {
-            const currentBookings = await sql`
-                SELECT COUNT(*) as count FROM gym_bookings 
-                WHERE user_id = ${userId} AND status = 'booked' AND gym_name = ${gymName}
-            `;
-            if (currentBookings[0].count >= 3) {
-                return res.status(400).json({ error: "You can only book up to 3 appointments." });
-            }
+        // Enforce max appointment limit in backend
+        const currentBookings = await sql`
+            SELECT COUNT(*) as count FROM gym_bookings 
+            WHERE user_id = ${userId} AND status = 'booked' AND gym_name = ${gymName}
+        `;
+        if (currentBookings[0].count >= 3) {
+            return res.status(400).json({ error: "You can only book up to 3 appointments." });
         }
 
-        // Insert or Update the booking status
+        // Insert the booking (conflict means slot is already taken)
         await sql`
             INSERT INTO gym_bookings (gym_name, date_string, time_slot, status, user_id)
-            VALUES (${gymName}, ${dateString}, ${timeSlot}, ${status}, ${userId})
+            VALUES (${gymName}, ${dateString}, ${timeSlot}, 'booked', ${userId})
             ON CONFLICT (gym_name, date_string, time_slot) 
-            DO UPDATE SET status = EXCLUDED.status, user_id = EXCLUDED.user_id
+            DO UPDATE SET status = 'booked', user_id = ${userId}
         `;
         
         res.json({ success: true });
     } catch (err) {
         console.error("Error saving booking:", err);
         res.status(500).json({ error: "Failed to save booking" });
+    }
+});
+
+// DELETE to cancel a booking (removes the record entirely)
+app.delete('/api/bookings', async (req, res) => {
+    try {
+        const { gymName, dateString, timeSlot, userId } = req.body;
+        
+        if (!userId) return res.status(401).json({ error: "Must be logged in to cancel" });
+
+        // Only allow the user who booked it to delete it
+        const result = await sql`
+            DELETE FROM gym_bookings 
+            WHERE gym_name = ${gymName} AND date_string = ${dateString} 
+              AND time_slot = ${timeSlot} AND user_id = ${userId}
+        `;
+        
+        res.json({ success: true });
+    } catch (err) {
+        console.error("Error deleting booking:", err);
+        res.status(500).json({ error: "Failed to cancel booking" });
     }
 });
 

@@ -26,32 +26,6 @@ A web application for gym enthusiasts to browse gyms, view weekly workout schedu
 - Light/dark theme toggle with persistent preference
 - AI Workout Assistant for fitness and workout questions
 
-## Setup Instructions
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/project-gymspace.git
-   cd project-gymspace
-   ```
-2. Navigate to the backend:
-   ```bash
-   cd backend
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Create a `.env` file in the `backend/` folder with:
-   ```
-   DATABASE_URL=your_supabase_connection_string
-   GEMINI_API_KEY=your_google_gemini_api_key
-   ```
-5. Start the server:
-   ```bash
-   npm start
-   ```
-6. Open `http://localhost:3000` in your browser.
-
 ## Project Structure
 
 ```

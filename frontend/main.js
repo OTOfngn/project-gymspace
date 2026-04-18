@@ -153,46 +153,43 @@ function createBookingBtn(dateString, timeSlot, initialStatus) {
     btn.setAttribute("data-status", if_booked);
 
     btn.onclick = async function () {
-        let newStatus = 'available';
-
         switch (if_booked) {
-            case 'booked':
-                newStatus = 'available';
-                break;
+            case 'booked by someone else':
+                alert("This is booked by someone else.");
+                return;
             case 'available':
                 if (!currentUserId) {
                     alert("Please login first to book an appointment.");
                     return;
                 }
-                newStatus = 'booked';
                 break;
-            case 'booked by someone else':
-                alert("This is booked by someone else.");
-                return;
         }
+
+        // Determine whether to book (POST) or cancel (DELETE)
+        const isBooking = if_booked === 'available';
+        const method = isBooking ? 'POST' : 'DELETE';
 
         try {
             const response = await fetch('https://gymspace-4sfc.onrender.com/api/bookings', {
-                method: 'POST',
+                method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     gymName: currentGym,
                     dateString: dateString,
                     timeSlot: timeSlot,
-                    status: newStatus,
                     userId: currentUserId
                 })
             });
 
             if (response.ok) {
-                if_booked = newStatus;
-                btn.textContent = if_booked === 'booked' ? "Booked" : "Book";
-                btn.style.color = if_booked === 'booked' ? "var(--primary-color)" : "var(--text-color)";
+                if_booked = isBooking ? 'booked' : 'available';
+                btn.textContent = isBooking ? "Booked" : "Book";
+                btn.style.color = isBooking ? "var(--primary-color)" : "var(--text-color)";
                 btn.setAttribute("data-status", if_booked);
             } else {
                 const errorData = await response.json();
-                console.error("Backend DB rejected booking update.");
-                alert(errorData.error || "Database failed to record booking.");
+                console.error("Backend rejected booking request.");
+                alert(errorData.error || "Failed to update booking.");
             }
         } catch (error) {
             console.error("Failed to connect to backend", error);
