@@ -283,13 +283,13 @@ function updateWeekDates() {
     const mondayDate = getMondayDate();
 
     const days = [
-        { id: "th-mon", name: "Monday" },
-        { id: "th-tue", name: "Tuesday" },
-        { id: "th-wed", name: "Wednesday" },
-        { id: "th-thu", name: "Thursday" },
-        { id: "th-fri", name: "Friday" },
-        { id: "th-sat", name: "Saturday" },
-        { id: "th-sun", name: "Sunday" }
+        { id: "th-mon", name: "Mon" },
+        { id: "th-tue", name: "Tue" },
+        { id: "th-wed", name: "Wed" },
+        { id: "th-thu", name: "Thu" },
+        { id: "th-fri", name: "Fri" },
+        { id: "th-sat", name: "Sat" },
+        { id: "th-sun", name: "Sun" }
     ];
 
     // Loop through the 7 days of the week, calculate their specific date, and update the HTML element
