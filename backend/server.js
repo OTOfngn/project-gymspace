@@ -33,7 +33,7 @@ async function initDB() {
                 password VARCHAR(50) NOT NULL
             )
         `;
-        
+
         // Ensure columns exist just in case the table was created by something else previously
         await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS username VARCHAR(50)`;
         await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS password VARCHAR(50)`;
@@ -63,7 +63,7 @@ app.post('/api/register', async (req, res) => {
     try {
         const { username, password } = req.body;
         if (!username || !password) return res.status(400).json({ error: "Username and password required" });
-        
+
         const result = await sql`
             INSERT INTO users (username, password, password_hash)
             VALUES (${username}, ${password}, ${password})
@@ -103,11 +103,11 @@ app.get('/api/bookings/:gym', async (req, res) => {
     try {
         const { gym } = req.params;
         const currentUserId = req.query.userId; // Pass from frontend safely
-        
+
         const bookings = await sql`
             SELECT date_string, time_slot, status, user_id FROM gym_bookings WHERE gym_name = ${gym}
         `;
-        
+
         // Hide user_ids and process "booked by someone else" directly in backend
         const processedBookings = bookings.map(b => {
             let finalStatus = b.status;
@@ -120,7 +120,7 @@ app.get('/api/bookings/:gym', async (req, res) => {
                 status: finalStatus
             };
         });
-        
+
         res.json(processedBookings);
     } catch (err) {
         console.error("Error fetching bookings:", err);
@@ -132,7 +132,7 @@ app.get('/api/bookings/:gym', async (req, res) => {
 app.post('/api/bookings', async (req, res) => {
     try {
         const { gymName, dateString, timeSlot, userId } = req.body;
-        
+
         if (!userId) return res.status(401).json({ error: "Must be logged in to book" });
 
         // Enforce max appointment limit in backend
@@ -151,7 +151,7 @@ app.post('/api/bookings', async (req, res) => {
             ON CONFLICT (gym_name, date_string, time_slot) 
             DO UPDATE SET status = 'booked', user_id = ${userId}
         `;
-        
+
         res.json({ success: true });
     } catch (err) {
         console.error("Error saving booking:", err);
@@ -163,7 +163,7 @@ app.post('/api/bookings', async (req, res) => {
 app.delete('/api/bookings', async (req, res) => {
     try {
         const { gymName, dateString, timeSlot, userId } = req.body;
-        
+
         if (!userId) return res.status(401).json({ error: "Must be logged in to cancel" });
 
         // Only allow the user who booked it to delete it
@@ -172,7 +172,7 @@ app.delete('/api/bookings', async (req, res) => {
             WHERE gym_name = ${gymName} AND date_string = ${dateString} 
               AND time_slot = ${timeSlot} AND user_id = ${userId}
         `;
-        
+
         res.json({ success: true });
     } catch (err) {
         console.error("Error deleting booking:", err);
